@@ -1,4 +1,8 @@
-package com.hfad.popularlibrariesrxjava2dagger2moxy
+package com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.presenters
+
+import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.models.CountersModel
+import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.views.MainView
+import com.hfad.popularlibrariesrxjava2dagger2moxy.R
 
 class MainPresenter(val view: MainView) {
     val model = CountersModel()

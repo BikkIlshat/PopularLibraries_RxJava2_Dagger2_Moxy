@@ -1,8 +1,10 @@
-package com.hfad.popularlibrariesrxjava2dagger2moxy
+package com.hfad.popularlibrariesrxjava2dagger2moxy.framework.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.presenters.MainPresenter
+import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.views.MainView
 import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), MainView {
