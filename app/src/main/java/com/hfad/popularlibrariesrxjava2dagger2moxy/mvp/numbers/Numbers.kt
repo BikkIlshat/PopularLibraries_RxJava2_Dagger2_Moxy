@@ -1,4 +1,4 @@
-package com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.numbers
+package com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.numbers
 
 enum class Numbers (val value: Int) {
     ONE(1),
