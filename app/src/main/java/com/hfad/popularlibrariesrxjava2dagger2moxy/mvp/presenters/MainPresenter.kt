@@ -1,26 +1,20 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters
 
-import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.models.CountersModel
+import com.github.terrakok.cicerone.Router
 import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views.MainView
 import moxy.MvpPresenter
 
 class MainPresenter(
-    private val model: CountersModel = CountersModel()
-) : MvpPresenter<MainView>() {
+    private val router: Router,
+    private val screens: IScreens
+    ) : MvpPresenter<MainView>() {
 
- fun counterOneClick() {
-     val nextValue = model.next(0)
-     viewState.setButtonOneText(nextValue.toString())
- }
-
-    fun counterTwoClick() {
-        val nextValue = model.next(1)
-        viewState.setButtonTwoText(nextValue.toString())
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        router.replaceScreen(screens.users())
     }
 
-    fun counterThreeClick() {
-        val nextValue = model.next(2)
-        viewState.setButtonThreeText(nextValue.toString())
+    fun backClicked() {
+        router.exit()
     }
-
 }
