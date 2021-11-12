@@ -1,26 +1,26 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.presenters
 
 import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.models.CountersModel
+import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.numbers.Numbers
 import com.hfad.popularlibrariesrxjava2dagger2moxy.MVP.views.MainView
-import com.hfad.popularlibrariesrxjava2dagger2moxy.R
 
-class MainPresenter(val view: MainView) {
-    val model = CountersModel()
+class MainPresenter(
+    private val view: MainView,
+    private val model: CountersModel = CountersModel()
+) {
+
 
     //Архитектурная ошибка. В качестве практического задания -- исправить
-    fun counterClick(id: Int){
-        when(id){
-            R.id.btn_counter1 -> {
-                val nextValue = model.next(0)
-                view.setButtonText(0, nextValue.toString())
+    fun counterClick(BtnCounter: Numbers) {
+        when (BtnCounter) {
+            Numbers.ONE -> {
+                view.setCounter1(model.next(0).toString())
             }
-            R.id.btn_counter2 -> {
-                val nextValue = model.next(1)
-                view.setButtonText(1, nextValue.toString())
+            Numbers.TWO -> {
+                view.setCounter2(model.next(1).toString())
             }
-            R.id.btn_counter3 -> {
-                val nextValue = model.next(2)
-                view.setButtonText(2, nextValue.toString())
+            Numbers.THREE -> {
+                view.setCounter3(model.next(2).toString())
             }
         }
     }
