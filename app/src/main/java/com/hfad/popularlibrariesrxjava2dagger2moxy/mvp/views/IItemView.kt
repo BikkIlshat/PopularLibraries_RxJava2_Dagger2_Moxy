@@ -7,3 +7,4 @@ package com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views
 interface IItemView {
     var pos: Int
 }
+
