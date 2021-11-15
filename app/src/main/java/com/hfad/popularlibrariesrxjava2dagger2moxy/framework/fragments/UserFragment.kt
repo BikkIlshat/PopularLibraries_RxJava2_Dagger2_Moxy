@@ -1,6 +1,7 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.framework.fragments
 
-import android.os.Bundle
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.hfad.popularlibrariesrxjava2dagger2moxy.R
 import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.FragmentUserBinding
@@ -32,9 +33,9 @@ class UserFragment :
 
     companion object {
         private const val USER = "USER"
-        fun newInstance(user: GitHubUser) =
+        fun newInstance(user: GitHubUser) : Fragment =
             UserFragment().apply {
-                arguments = Bundle().apply {
+                arguments = bundleOf().apply {
                     putParcelable(USER, user)
                 }
             }
