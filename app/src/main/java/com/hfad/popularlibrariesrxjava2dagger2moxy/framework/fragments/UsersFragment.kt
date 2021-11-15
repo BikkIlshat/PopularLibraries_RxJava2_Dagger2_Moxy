@@ -1,6 +1,7 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.framework.fragments
 
 import android.annotation.SuppressLint
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.hfad.popularlibrariesrxjava2dagger2moxy.R
@@ -43,7 +44,7 @@ class UsersFragment :
 
 
     companion object {
-        fun newInstance() = UsersFragment()
+        fun newInstance() : Fragment = UsersFragment()
     }
 
 }
