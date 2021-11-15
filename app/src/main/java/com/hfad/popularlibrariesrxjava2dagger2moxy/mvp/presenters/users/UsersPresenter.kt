@@ -9,11 +9,10 @@ import moxy.MvpPresenter
 class UsersPresenter(
     private val usersRepo: GitHubUserRepositoryImpl,
     private val router: Router,
-    private val screens: IScreens,
-    val usersListPresenter: UsersListPresenter = UsersListPresenter()
+    private val screens: IScreens
 ) : MvpPresenter<UsersView>() {
 
-
+     val usersListPresenter = UsersListPresenter()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
