@@ -32,10 +32,11 @@ class UsersPresenter(
             usersRepo
                 .getUsers()
                 .subscribe { users ->
-                    usersListPresenter.users.addAll(users)
+                    usersListPresenter.users
+                        .addAll(users)
+                    viewState.updateList()
                 }
         )
-        viewState.updateList()
     }
 
     fun backPressed(): Boolean {
