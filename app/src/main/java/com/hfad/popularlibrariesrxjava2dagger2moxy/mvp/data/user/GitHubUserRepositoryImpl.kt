@@ -1,5 +1,7 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.data.user
 
+import io.reactivex.rxjava3.core.Single
+
 class GitHubUserRepositoryImpl : GitHubUserRepository {
 
     private val repositories = listOf(
@@ -10,9 +12,9 @@ class GitHubUserRepositoryImpl : GitHubUserRepository {
         GitHubUser("login5")
     )
 
-    override fun getUsers(): List<GitHubUser> {
-        return repositories
-    }
+    override fun getUsers(): Single<List<GitHubUser>> =
+        Single.just(repositories)
+
 
 
 }
