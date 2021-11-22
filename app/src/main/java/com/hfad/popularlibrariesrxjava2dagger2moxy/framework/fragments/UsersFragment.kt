@@ -1,17 +1,17 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.framework.fragments
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.hfad.popularlibrariesrxjava2dagger2moxy.R
+import com.hfad.popularlibrariesrxjava2dagger2moxy.data.user.GitHubUserRepositoryFactory
 import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.FragmentUsersBinding
-import com.hfad.popularlibrariesrxjava2dagger2moxy.framework.AndroidScreens
-import com.hfad.popularlibrariesrxjava2dagger2moxy.framework.App
+import com.hfad.popularlibrariesrxjava2dagger2moxy.framework.App.Navigation.router
 import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.adapter.UsersRVAdapter
-import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.data.user.GitHubUserRepositoryImpl
-import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.users.UsersPresenter
 import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.BackButtonListener
+import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.users.UsersPresenter
 import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views.users.UsersView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -21,14 +21,18 @@ class UsersFragment :
     UsersView,
     BackButtonListener {
 
+    private val viewBinding: FragmentUsersBinding by viewBinding()
+
     private val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(GitHubUserRepositoryImpl(), App.instance.router, AndroidScreens())
+        UsersPresenter(
+            GitHubUserRepositoryFactory.create(),
+            router
+        )
     }
+
     private var adapter: UsersRVAdapter? = null
 
-    private val vb by viewBinding(FragmentUsersBinding::bind)
-
-    override fun init() = with(vb) {
+    override fun init() = with(viewBinding) {
         rvUsers.layoutManager = LinearLayoutManager(context)
         adapter = UsersRVAdapter(presenter.usersListPresenter)
         rvUsers.adapter = adapter
@@ -41,10 +45,12 @@ class UsersFragment :
 
     override fun backPressed() = presenter.backPressed()
 
-
+    override fun showToast(message: String) {
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_LONG).show()
+    }
 
     companion object {
-        fun newInstance() : Fragment = UsersFragment()
+        fun newInstance(): Fragment = UsersFragment()
     }
 
 }

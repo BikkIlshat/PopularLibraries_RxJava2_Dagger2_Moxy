@@ -1,12 +1,11 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.users
 
-import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.data.user.GitHubUser
-import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.IUserListPresenter
-import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views.UserItemView
+import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views.GithubUserViewModel
+import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views.user.UserItemView
 
 class UsersListPresenter : IUserListPresenter {
 
-    val users = mutableListOf<GitHubUser>()
+    val users = mutableListOf<GithubUserViewModel>()
 
     override var itemClickListener: ((UserItemView) -> Unit)? = null
 
@@ -14,6 +13,6 @@ class UsersListPresenter : IUserListPresenter {
 
     override fun bindView(view: UserItemView) {
         val user = users[view.pos]
-        view.setLogin(user.login)
+        view.setLogin(user.login, user.avatar_url)
     }
 }

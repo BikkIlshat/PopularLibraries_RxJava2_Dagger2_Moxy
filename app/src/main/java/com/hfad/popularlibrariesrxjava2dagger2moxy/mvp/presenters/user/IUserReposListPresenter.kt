@@ -1,0 +1,6 @@
+package com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.user
+
+import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.IListPresenter
+import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.views.user.UserRepoItemView
+
+interface IUserReposListPresenter : IListPresenter<UserRepoItemView>
