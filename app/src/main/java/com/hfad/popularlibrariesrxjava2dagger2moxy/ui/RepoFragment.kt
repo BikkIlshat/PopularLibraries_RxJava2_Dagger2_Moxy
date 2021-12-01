@@ -9,17 +9,17 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.hfad.popularlibrariesrxjava2dagger2moxy.R
 import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.FragmentRepoBinding
+import com.hfad.popularlibrariesrxjava2dagger2moxy.model.GithubUsersRepo
 import com.hfad.popularlibrariesrxjava2dagger2moxy.model.retrofit.GithubRepos
-import com.hfad.popularlibrariesrxjava2dagger2moxy.model.RepositoryFactory
-import com.hfad.popularlibrariesrxjava2dagger2moxy.model.network.NetworkStatusFactory
 import com.hfad.popularlibrariesrxjava2dagger2moxy.presentation.RepoPresenter
-import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.schedulers.SchedulersFactory
+import com.hfad.popularlibrariesrxjava2dagger2moxy.ui.abs.AbsFragment
 import com.hfad.popularlibrariesrxjava2dagger2moxy.views.RepoView
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
-class RepoFragment : MvpAppCompatFragment(), RepoView {
+class RepoFragment : AbsFragment(R.layout.fragment_repo), RepoView {
     companion object {
         private const val ARG_REPO_URL = "repo"
         fun newInstance(repoUrl: String?) =
@@ -27,15 +27,22 @@ class RepoFragment : MvpAppCompatFragment(), RepoView {
                 arguments = bundleOf(ARG_REPO_URL to repoUrl)
             }
     }
+
     private val repoUrl: String? by lazy {
         arguments?.getString(ARG_REPO_URL)
     }
-    private val binding : FragmentRepoBinding by viewBinding(CreateMethod.INFLATE)
+    private val binding: FragmentRepoBinding by viewBinding(CreateMethod.INFLATE)
+
+    @Inject
+    lateinit var gitHubRepo: GithubUsersRepo
+
+
+
     private val presenter: RepoPresenter by moxyPresenter {
         RepoPresenter(
-            RepositoryFactory.create(NetworkStatusFactory.create(context)),
-            repoUrl,
-            SchedulersFactory.create()
+            gitHubRepo = gitHubRepo,
+            repoUrl = repoUrl,
+            schedulers = schedulers
         )
     }
 

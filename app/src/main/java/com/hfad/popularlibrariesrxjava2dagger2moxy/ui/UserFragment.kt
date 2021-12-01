@@ -10,19 +10,17 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.hfad.popularlibrariesrxjava2dagger2moxy.App.Navigation.router
+import com.hfad.popularlibrariesrxjava2dagger2moxy.R
 import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.FragmentItemUserBinding
+import com.hfad.popularlibrariesrxjava2dagger2moxy.model.GithubUsersRepo
 import com.hfad.popularlibrariesrxjava2dagger2moxy.model.retrofit.GithubUser
-import com.hfad.popularlibrariesrxjava2dagger2moxy.model.RepositoryFactory
-import com.hfad.popularlibrariesrxjava2dagger2moxy.model.network.NetworkStatusFactory
 import com.hfad.popularlibrariesrxjava2dagger2moxy.presentation.UserPresenter
-import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.ImageLoader
-import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.schedulers.SchedulersFactory
+import com.hfad.popularlibrariesrxjava2dagger2moxy.ui.abs.AbsFragment
 import com.hfad.popularlibrariesrxjava2dagger2moxy.views.UserView
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
-class UserFragment : MvpAppCompatFragment(), UserView {
+class UserFragment : AbsFragment(R.layout.fragment_users_list), UserView {
     companion object {
         private const val ARGS_USER = "ARG_USER"
         fun newInstance(githubUserLogin: String?) = UserFragment().apply {
@@ -30,17 +28,23 @@ class UserFragment : MvpAppCompatFragment(), UserView {
         }
     }
 
-    private val imageLoader = ImageLoader
+    @Inject
+    lateinit var gitHubRepo: GithubUsersRepo
+
+
+
     private val binding by viewBinding<FragmentItemUserBinding>(CreateMethod.INFLATE)
-    private val user by lazy {
+    private val userLogin by lazy {
         arguments?.getString(ARGS_USER).orEmpty()
     }
+
+    @Suppress("unused")
     private val userPresenter by moxyPresenter {
         UserPresenter(
-            user,
-            RepositoryFactory.create(NetworkStatusFactory.create(context)),
-            SchedulersFactory.create(),
-            router
+            gitHubRepo = gitHubRepo,
+            userLogin = userLogin,
+            schedulers = schedulers,
+            router = router
         )
     }
 
