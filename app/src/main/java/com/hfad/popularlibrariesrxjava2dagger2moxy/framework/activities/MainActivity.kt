@@ -1,9 +1,7 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy.framework.activities
 
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.hfad.popularlibrariesrxjava2dagger2moxy.R
-import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.ActivityMainBinding
 import com.hfad.popularlibrariesrxjava2dagger2moxy.framework.AndroidScreens
 import com.hfad.popularlibrariesrxjava2dagger2moxy.framework.App
 import com.hfad.popularlibrariesrxjava2dagger2moxy.mvp.presenters.BackButtonListener
@@ -14,8 +12,7 @@ import moxy.ktx.moxyPresenter
 
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
 
-    private val binding by viewBinding(ActivityMainBinding::bind)
-
+    
     private val navigator = AppNavigator(this, R.id.container)
 
     private val presenter by moxyPresenter {
