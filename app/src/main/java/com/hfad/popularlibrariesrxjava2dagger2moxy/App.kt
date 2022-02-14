@@ -1,22 +1,23 @@
 package com.hfad.popularlibrariesrxjava2dagger2moxy
 
-import android.app.Application
 import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
-import com.hfad.popularlibrariesrxjava2dagger2moxy.model.storage.RoomDB
+import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.ImageLoader
+import com.hfad.popularlibrariesrxjava2dagger2moxy.di.DaggerApplicationComponent
+import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.schedulers.SchedulersFactory
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-class App : Application() {
-    companion object Navigation {
+class App : DaggerApplication() {
 
-        private val cicerone : Cicerone<Router> by lazy {
-            Cicerone.create()
-        }
-        val navigatorHolder = cicerone.getNavigatorHolder()
-        val router = cicerone.router
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        RoomDB.create(this)
-    }
+    override fun applicationInjector(): AndroidInjector<App> =
+        DaggerApplicationComponent
+            .builder()
+            .withContext(applicationContext)
+            .withImageLoader(ImageLoader)
+            .apply {
+                val cicerone = Cicerone.create()
+                withRouter(cicerone.router)
+                withNavigationHolder(cicerone.getNavigatorHolder())
+            }
+            .build()
 }
