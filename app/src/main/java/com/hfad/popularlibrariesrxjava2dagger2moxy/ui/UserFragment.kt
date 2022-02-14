@@ -18,11 +18,12 @@ import com.hfad.popularlibrariesrxjava2dagger2moxy.model.network.NetworkStatusFa
 import com.hfad.popularlibrariesrxjava2dagger2moxy.presentation.UserPresenter
 import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.ImageLoader
 import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.schedulers.SchedulersFactory
+import com.hfad.popularlibrariesrxjava2dagger2moxy.views.BackButtonListener
 import com.hfad.popularlibrariesrxjava2dagger2moxy.views.UserView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UserFragment : MvpAppCompatFragment(), UserView {
+class UserFragment : MvpAppCompatFragment(), UserView, BackButtonListener {
     companion object {
         private const val ARGS_USER = "ARG_USER"
         fun newInstance(githubUserLogin: String?) = UserFragment().apply {
@@ -73,4 +74,7 @@ class UserFragment : MvpAppCompatFragment(), UserView {
     override fun updateRepose() {
         binding.reposList.adapter?.notifyDataSetChanged()
     }
+
+    override fun backPressed() = userPresenter.backClick()
+
 }

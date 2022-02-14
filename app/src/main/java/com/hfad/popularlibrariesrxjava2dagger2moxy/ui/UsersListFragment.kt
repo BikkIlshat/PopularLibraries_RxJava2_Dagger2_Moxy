@@ -16,6 +16,7 @@ import com.hfad.popularlibrariesrxjava2dagger2moxy.model.network.NetworkStatusFa
 import com.hfad.popularlibrariesrxjava2dagger2moxy.presentation.UsersPresenter
 import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.ImageLoader
 import com.hfad.popularlibrariesrxjava2dagger2moxy.utils.schedulers.SchedulersFactory
+import com.hfad.popularlibrariesrxjava2dagger2moxy.views.BackButtonListener
 import com.hfad.popularlibrariesrxjava2dagger2moxy.views.UsersView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -58,4 +59,6 @@ class UsersListFragment : MvpAppCompatFragment(), UsersView {
     companion object {
         fun newInstance() = UsersListFragment()
     }
+
+
 }
