@@ -8,13 +8,12 @@ import com.hfad.popularlibrariesrxjava2dagger2moxy.App.Navigation.navigatorHolde
 import com.hfad.popularlibrariesrxjava2dagger2moxy.App.Navigation.router
 import com.hfad.popularlibrariesrxjava2dagger2moxy.databinding.ActivityMainBinding
 import com.hfad.popularlibrariesrxjava2dagger2moxy.presentation.MainPresenter
-import com.hfad.popularlibrariesrxjava2dagger2moxy.ui.BackButtonPressed
 import com.hfad.popularlibrariesrxjava2dagger2moxy.views.MainView
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 
 class MainActivity : MvpAppCompatActivity(), MainView {
-    private val binding: ActivityMainBinding by viewBinding(CreateMethod.INFLATE)
+    private val binding : ActivityMainBinding by viewBinding(CreateMethod.INFLATE)
     private val navigator = AppNavigator(this, R.id.container)
     private val mainPresenter by moxyPresenter { MainPresenter(router) }
 
@@ -33,13 +32,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         super.onPause()
     }
 
-    override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            if (it is BackButtonPressed && it.backButtonPressed()) {
-                return
-            }
-            mainPresenter.back()
-        }
-    }
+
 
 }
