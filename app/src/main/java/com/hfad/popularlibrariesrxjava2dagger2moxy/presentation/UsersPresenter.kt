@@ -58,10 +58,7 @@ class UsersPresenter(
         }
     }
 
-    fun backPressed(): Boolean {
-        router.exit()
-        return true
-    }
+
 
     override fun onDestroy() {
         disposable.clear()

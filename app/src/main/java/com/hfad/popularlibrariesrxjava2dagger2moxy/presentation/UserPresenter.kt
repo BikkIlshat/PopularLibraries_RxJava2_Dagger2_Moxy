@@ -23,6 +23,7 @@ class UserPresenter(
     private val repos = mutableListOf<GithubRepos>()
     private var disposable = CompositeDisposable()
     val reposPresenter = ReposPresenter()
+
     override fun onFirstViewAttach() {
         viewState.init()
         disposable += gitHubRepo
@@ -77,6 +78,11 @@ class UserPresenter(
     override fun onDestroy() {
         disposable.clear()
         super.onDestroy()
+    }
+
+    fun backClick(): Boolean {
+        router.exit()
+        return true
     }
 }
 
