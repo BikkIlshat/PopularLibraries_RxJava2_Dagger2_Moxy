@@ -5,13 +5,18 @@ import com.hfad.popularlibrariesrxjava2dagger2moxy.BuildConfig.GITHUB_USER_PASSW
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 
 object GithubInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response =
-        chain.proceed(
-            chain.request()
-                .newBuilder()
-                .header("Authorization", Credentials.basic(GITHUB_USER_NAME, GITHUB_USER_PASSWORD))
-                .build()
-        )
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        request.newBuilder()
+            .header("Authorization", Credentials.basic(GITHUB_USER_NAME, GITHUB_USER_PASSWORD))
+            .build().apply {
+                HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }
+            }
+        return chain.proceed(request)
+    }
 }

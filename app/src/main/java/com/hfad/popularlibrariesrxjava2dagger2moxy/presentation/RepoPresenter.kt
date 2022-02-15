@@ -6,15 +6,17 @@ import com.hfad.popularlibrariesrxjava2dagger2moxy.views.RepoView
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class RepoPresenter(
-    private val repo : GithubUsersRepo,
+class RepoPresenter
+@Inject constructor(
+    private val gitHubRepo: GithubUsersRepo,
     private val repoUrl: String?,
     private val schedulers: Schedulers
-) : MvpPresenter<RepoView>(){
+) : MvpPresenter<RepoView>() {
     private val disposable = CompositeDisposable()
     override fun onFirstViewAttach() {
-        disposable += repo
+        disposable += gitHubRepo
             .getRepo(repoUrl)
             .observeOn(schedulers.main())
             .subscribe(

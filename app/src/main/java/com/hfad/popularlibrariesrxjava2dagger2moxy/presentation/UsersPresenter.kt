@@ -14,7 +14,7 @@ import moxy.MvpPresenter
 class UsersPresenter(
     private val repo: GithubUsersRepo,
     private val router: Router,
-    private val uiScheduler: Schedulers
+    private val schedulers: Schedulers
 ) :
     MvpPresenter<UsersView>() {
     private var users = mutableListOf<GithubUser>()
@@ -44,7 +44,7 @@ class UsersPresenter(
 
     private fun loadData() {
         disposable += repo
-            .getUsers().observeOn(uiScheduler.main())
+            .getUsers().observeOn(schedulers.main())
             .subscribe(
                 {
                     users.addAll(it)
